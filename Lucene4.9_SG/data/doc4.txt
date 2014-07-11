@@ -1,0 +1,23 @@
+﻿When Lucene first appeared, this superfast search engine was nothing short of amazing. Today, Lucene still delivers. Its high-performance, easy-to-use API, features like numeric fields, payloads, near-real-time search, and huge increases in indexing and searching speed make it the leading search tool.
+
+And with clear writing, reusable examples, and unmatched advice, Lucene in Action, Second Edition is still the definitive guide to effectively integrating search into your applications. This totally revised book shows you how to index your documents, including formats such as MS Word, PDF, HTML, and XML. It introduces you to searching, sorting, and filtering, and covers the numerous improvements to Lucene since the first edition. Source code is for Lucene 3.0.1.
+
+NEW IN THE SECOND EDITION
+Performing hot backups
+Using numeric fields
+Tuning for indexing or searching speed
+Boosting matches with payloads
+Creating reusable analyzers
+Adding concurrency with threads
+Four new case studies
+Much more!
+ABOUT THE AUTHORS
+Michael McCandless is a Lucene PMC member and committer with more than a decade of experience building search engines. Erik Hatcher and Otis Gospodnetić are the authors of the first edition of Lucene in Action and long-time contributors to Lucene, Solr, Mahout, and other Lucene-based projects.
+
+WHAT REVIEWERS ARE SAYING
+“The best thing about Manning in general is that they fill the void. Lucene in Action is probably the only book on Lucene and is in itself, the bible for Lucene. I have worked on Lucene for few years now but still this is my ONLY reference.”
+—Ravi Alapati (independent consultant)
+
+“If you're interested in version 3 or later of the Apache Lucene search library, you need this book. As far as I know, this book is the only way to come up to speed on the intricacies of Lucene.”
+—Bob Carpenter, LingPipe
+

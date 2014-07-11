@@ -1,0 +1,337 @@
+﻿INTRODUCTION TO PROGRAM ANALYSIS#
+
+Dependency#
+
+What prohibits tasks from running in parallel? Dependency! Types of dependency:
+Data dependency
+Control dependency
+Resource dependency (worker)
+Data Dependency#
+
+Some tasks need to be done after some tasks because of data:
+a = F(b)
+c = G(a) // G(a) 中的 變數 a 必須在 F(b) 處理之後的 a!
+d = H(a)
+e = M(x)
+
+How would the work get done correctly?
+Sequential: follow the program order (1 result)
+Parallel: need to obtain the same result (hard)
+Control Dependency#
+
+Some tasks need to be done based on the condition:
+flag = F(a)
+// 要執行 G 還是 H 函數, 必須等 F 函數執行結果!
+if (flag == 1)
+    c = G(b);
+else    
+    c = H(b);
+Can you still do G and H in parallel?
+Yes, if you do not care about the overhead
+Rule 1: Always check to use the latest data
+Rule 2: Don’t overwrite useful data if you aren’t sure
+Resource Contention#
+
+Alice wants to use CPU0, Bob wants to use CPU0 , too
+Solution #1: Use CPU0 in turns (multitasking)
+Solution #2: Let someone use CPU1
+Solution #3: Let someone use another server
+Code Re-entrance and Thread-Safe#
+
+How do you know “calling foo(x, y, z)” ?
+Always return the same results?
+Does not cause side effects?
+Some functions are state-ful
+Use memory to record its state
+State may be changed internally (local memory) or externally (global memory)
+Example: strtok
+Examples#
+
+- Example 1
+for (i=1; i<=N; i++)
+  A[i] = A[i] + f(i);
+展開後變成:
+A[1] = A[1] + f(1); // Write A[1]
+A[2] = A[2] + f(2); // Read A[2] and Write A[2] which doesn't depend on A[1]
+...
+A[N] = A[N] + f(N);
+現在的運算不會依賴之前運算的結果.
+No LCD (loop-carried dependency)
+
+但如果是:
+for (i=1; i<=N; i++)
+  sum = sum + f(i); 
+展開之後變成:
+sum = sum + f(1) // Write sum
+sum = sum + f(2) // Read sum and Write sum which depends on previous calculation result!
+...
+sum = sum + f(N)
+每個運算都會依賴前一個計算後的 sum 結果.
+Has LCD
+
+- Example 2
+for (i=1; i<=N; i++)
+  A[B[i]] = A[B[i]] + f(i);
+No LCD if B[i] != B[j] for all i !=j
+So that different iterations do not write to the same A[]
+for (i=1; i<=N; i++)
+ A[i] = A[B[i]] + f(i);
+No LCD if B[i] != 1..i-1, i+1..N for all i (也就是 B[i]=i)
+
+- Example 3
+for (i=1; i<=N; i++)
+  A[i] = B[A[i]] + f(i);
+No LCD
+It doesn’t matter if two iterations read the same data
+for (i=1; i<=N; i++)
+   j = T(i);
+   A[B[i]] = f(B[j]);
+No LCD if B[i1] != B[i2] for i1 != i2
+B[] is read-only in all iterations
+Example: The Trapezoidal Rule#
+
+The trapezoidal rule is one of a family of formulas for numerical integration called Newton–Cotes formulas, of which the midpoint rule is similar to the trapezoid rule. 下圖要計算左邊圖形面積, 可以像右邊將圖形切成一個個類似梯形在加起來:
+
+
+
+公式的說明如下:
+
+
+
+根據公式得到的 Pseudo code 如下:
+
+
+
+Quiz Time!
+Can the iteration of the loop in this program be executed in parallel to give correct results?
+Do you think that the nature of the application is suitable for parallel execution?
+Program Analysis#
+
+Analysis including:
+Program flow
+Execution time profile
+Data flow and dependency
+Possible parallelization schemes
+Possible parallel speedup
+Work-depth analysis
+Complicated Examples, 1#
+
+
+
+
+Which variables could cause data races?
+It is easier to eliminate those which cannot
+Position, Velocity, Num_Neighbors are read-only
+Loop index variables, i and j, cannot cause race
+Force does not cause data races either
+How about Propagate_force()? Need to look inside
+It is very difficult for compilers to do what we just did
+Complicated Examples, 2#
+
+
+
+
+Which variables could cause data races?
+It is easier to eliminate those which cannot
+Type is read-only
+type_element is temporal, can be defined as private
+Constants (plastic, glass) and loop index (i) can be ignored
+Force, Position, Velocity are passed to function Update_plastic() or Update_elastic() - Need to look into the functions
+FORTRAN: Pass by reference
+In Update_plastic() and Update_elastic()
+Force(i) is read-only
+Position(i), Velocity(i) are read and modified
+NO LCD
+Pass by Value or Reference?#
+
+In this statement:
+x = Update_plastic(y, A[x])
+how are variables passed to the function?
+
+Convention in C: pass by value
+Consider the values of y and A[x] are read by the caller and copied to the callee
+Good: no side-effect
+Convention in FORTRAN: pass by reference
+The callee can change the value!
+Need to be more careful
+Pass by Reference in C#
+
+進階型態 : 指標 (指標與記憶體位址)
+#include <stdio.h> 
+void swapnum(int *i, int *j) {
+  int temp = *i;
+  *i = *j;
+  *j = temp;
+}
+
+int main(void) {
+  int a = 10;
+  int b = 20;
+
+  swapnum(&a, &b);
+  printf("A is %d and B is %d\n", a, b);
+  return 0;
+}
+Parallelizing C Programs#
+
+It can be a mess with pointers and global variables shared across functions. Need to pay attention to how these global variables are used throughout the program - Trace code!
+Usually they are common data structures and they should be properly documented in the program
+Use tools!
+Tracing Codes#
+
+A complicated application may contain many millions of lines of codes (LoC)
+Linux kernel in 2011: 15 million total lines of code and Microsoft is a top contributor
+Many functions in Linux kernel are parallelized, but many are not yet
+Linux kernel is written in C and parallelized with threads
+Need to understand the big picture first
+Some domain knowledge is required
+Better to know the performance bottlenecks to know the focus
+
+
+
+Application Example#
+
+
+
+
+Usually, we focus on loops – especially those which occupy the execution most
+There are no LCD’s within these two major loops
+No compiler can parallelize this code automatically
+Parallelization#
+
+
+
+
+You can do better than state-of-the-art compilers
+Simply use a loop_parallel directive to tell the compiler that the two do loops are parallelizable
+Reduction#
+
+Some codes can be parallelized with some modifications. The basic idea is to eliminate the LCD’s and race conditions. We will see more examples through the courses. Let’s study the case of “reduction” first.
+Reduction, 1#
+
+for (i=1; i<=N; i++)
+  sum = sum + f(i);
+The code contains a “reduction” operation:
+Summarizing a set of data into one value
+sum is called the reduction variable
+LCD can be eliminated by replacing the reduction variable with a temporary private variable, followed by a simple reduction operation.
+for (i=1; i<=N; i++)
+  temp_sum[i] = f(i);
+Reduce(temp_sum, sum);
+Amdahl’s Law#
+
+When you consider parallelizing a piece of code, you can apply Amdahl’s Law to see the potential benefit. So in sequence programming:
+Sequential time = Time(Part_A) + Time(Part_B)
+
+If PartA can be parallelized, ideally,
+Parallel time = Time(Part_A)/ N + Time(Part_B)
+Parallel speedup = Sequential time/Parallel time
+If N=infinity, Speedup = Time(Part_A)/Time(Part_B) + 1
+Reduction, 2#
+
+
+
+
+Our target is to improve parallelism and speed-up code:
+Assume execution time of f(i) = T cycles; add takes A cycle: Sequential time = N*(T+A)
+Given P processors, assume reduction is done sequentially: Parallel time = N*T/P + N*A
+Speedup = N*(T+A)/(N*T/P + N*A) = (T+A)/(T/P+A)
+P=infinity, Speedup = T/A+1
+Good if T>>A; Bad if T ~= A
+Anything else we can do? Try to parallelize the reduction operation!
+So that Parallel time = N*T/P + N*A/P and Speedup = P
+Parallel Reduction#
+
+Various algorithms can be used to perform reduction operations in parallel:
+
+
+
+Work-Depth Analysis#
+
+Given n tasks and unlimited computing nodes, how fast can you get all the tasks done? Dependencies limits the parallelism
+
+
+
+Data Flow Diagrams and Work-Depth Analysis, 1#
+
+
+
+
+Data Flow Diagrams and Work-Depth Analysis, 2#
+
+This is a program flow diagram, not data flow diagram
+Need to specify the input data, e.g. number of products
+Need to unfold the loops
+
+
+
+MapReduce#
+
+It is possible to parallelize a program using generalized Map-Reduce patterns
+Embarrassingly parallel programs: those which do not need the reduce operation
+
+
+
+Performance Problems#
+
+Observing performance problems should be a part of program analysis
+Use of performance tools is critical
+
+
+
+Support for Parallelization#
+
+Standard parallel languages or libraries: OpenMP, MPI, Pthreads, FBP, OpenCL, CUDA,…
+Parallelized/tuned libraries
+Domain-decomposition packages
+Middleware: Database, statistical packages
+Program analyzer/visualizer
+Performance analyzer
+Tools Offered by Intel#
+
+Intel Software Development Products
+Intel Parallel Studio, Intel Cluster Studio
+Intel Vtune
+Program Flow & Execution Time Profile#
+
+For simplicity, let’s assume all floating point operations take A cycles and f(x) take T cycles
+
+
+
+Loop-Carried Dependencies?
+Two variable cause LCD
+x_i
+approx
+Parallelizing the loop: eliminate LCD
+x_i is temporal -> make it private
+approx is reduction variable
+/*Input: a, b, n*/
+h = (b-a)/n;
+approx = (f(a)+f(b))/2.0;
+for(i = 0; i<=n-1; i++)
+{
+    x_i = a + i*h; // x_i is private
+    temp_approx[i] = f(x_i);
+}
+Reduce(temp_approx, approx);
+Speedup#
+
+Sequential Time = 4A + 2T + (3A+T)*n
+Parallel Time = 4A + 2T + (2A+T)*n/P+ log2(n)*A
+Speedup = Seq.Time / Para.Time
+Scalability Analysis#
+
+Assume T>>A, n>>1:
+
+
+
+橫軸為 CPU 個數, 縱軸為 Speedup 數目
+當 T=100, 理想下 Speedup 應該跟 CPU 個數成正比, 即 Linear 的那條綠線.
+但由圖觀察顯然不是, 因為 n 決定了可平行的部分的比重, 因此當 n 越大, 便可使用較多的 CPU 來進行平行化且有線性的效果.
+另外從公式上也可以知道 Speedup 最大的是值只可能是 P (十個人同時只能做十個人的事...)
+MapReduce for Big Data#
+
+With big data (n>>1), the MapReduce pattern has good scalability
+But, you still want T>>A, i.e. the map function performs compute intensive work and the reduce function does as little work as possible
+It is possible to parallelize a program using the Map-Reduce pattern
+Embarrassingly parallel programs: those which do not need the reduce operation

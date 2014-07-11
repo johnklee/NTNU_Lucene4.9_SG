@@ -1,0 +1,259 @@
+﻿Natural Language Processing#
+
+Profession : Hsin-Hsi Chen (陳信希)
+Department of Computer Science and Information Engineering
+National Taiwan University
+hhchen@csie.ntu.edu.tw
+What is Natural Language Processing (NLP)?#
+
+Computational Linguistics (CL)
+The Study of computer systems for understanding and generating natural languages.
+To make the computer a fluent user of ordinary language in all kinds of conversation tasks
+Human Language Technology (HLT
+Natural Language Processing FAQ (mit faq)
+Wiki
+Applications#
+
+Lot’s of exciting stuff going on in industry :
+
+
+Let’s take a quick look at three popular application areas :
+Text analytics
+Question answering
+Machine translation
+Text Analytics#
+
+Data-mining of weblogs, microblogs, discussion forums, message boards, user groups, and other forms of user generated media :
+Product marketing information
+Political opinion tracking
+Social network analysis
+Buzz analysis (what’s hot, what topics are people talking about right now)
+
+
+Question Answering#
+
+Traditional information retrieval provides documents/resources that provide users with what they need to satisfy their information needs. Question answering, instead, directly provides an answer to information needs posed as questions.
+
+
+Machine Translation#
+
+The automatic translation of texts between languages is one of the oldest non-numerical applications in Computer Science. In the past 5 years or so MT has gone from a niche academic curiosity to a robust commercial application.
+
+
+Why is NLP Difficult?#
+
+NLP is difficult because Natural Language is highly ambiguous.
+Example1: “Our company is training workers” has 3 parses (i.e., syntactic analyses).
+Example2: “List the sales of the products produced in 1973 with the products produced in 1972” has 455 parses.
+Therefore, a practical NLP system must be good at making disambiguation decisions of word sense, word category, syntactic structure, and semantic scope.
+Critical Problems in NLP#
+
+Ambiguity Resolution
+Lexical
+current: noun vs. adjective
+bank (noun): money vs. river
+order: hundreds of candidates per sentence
+Syntactic
+[saw [the boy] [in the park]]
+[saw [the boy in the park]]
+order: hundreds to thousands
+Semantic
+[the policy] were ordered [to stop drinking] by midnight
+agent vs. patient
+Ill-Formedness
+typographic errors
+grammatical errors, e.g., subject-verb agreement
+Robustness Problem
+change in domain
+網路語言
+emoticon
+Main Topics in Large-Scale NLPS Design #
+
+Knowledge representation
+How to organize and describe linguistic knowledge for the critical problems.
+Knowledge strategies
+How to use knowledge for efficient parsing, ambiguity resolution, ill-formed recovery.
+Knowledge acquisition
+How to setup knowledge base systematically and costeffectively. How to maintain knowledge base consistency.
+Knowledge integration
+How to jointly consider various knowledge source effectively
+Problems#
+
+In normal situation, we have nlp as below :
+
+
+Because of the ambigity, the reality will be :
+
+
+Dealing with Ambiguity#
+
+Four possible approaches as below :
+Tightly coupled interaction among processing levels; knowledge from other levels can help decide among choices at ambiguous levels.
+Pipeline processing that ignores ambiguity as it occurs and hopes that other levels can eliminate incorrect structures.
+Probabilistic approaches based on making the most likely choices. (Or passing along n-best choices)
+Don’t do anything, maybe it won’t matter.
+Models and Algorithms#
+
+By models we mean the formalisms that are used to capture the various kinds of linguistic knowledge we need. Algorithms are then used to manipulate the knowledge representations needed to tackle the task at hand.
+Models#
+
+State machines
+Rule-based approaches
+Logical formalisms
+Probabilistic models
+Algorithms#
+
+Many of the algorithms that we’ll study will turn out to be transducers; algorithms that take one kind of structure as input and output another.
+Unfortunately, ambiguity makes this process difficult. This leads us to employ algorithms that are designed to handle ambiguity of various kinds.
+Paradigms#
+
+State-space search(wiki)
+To manage the problem of making choices during processing when we lack the information needed to make the right choice.
+Dynamic programming(wiki)
+To avoid having to redo work during the course of a state-space search.(CKY, Earley, Minimum Edit Distance, Viterbi, Baum-Welch)
+Classifiers
+Machine learning based classifiers that are trained to make decisions based on features extracted from the local context.
+Approach to NLP#
+
+From ~1970-1989, people were concerned with the science of the mind and built small (toy) systems' that attempted to behave intelligently. Recently, there has been more interest on engineering practical solutions using automatic learning (knowledge induction). Below are three classic approaches :
+Rule-based approach
+Corpus-based approach
+Hybrid approach
+Rule-Based Approach#
+
+Advantages
+No need to prepare database
+Easy to incorporate existing linguistic knowledge
+Have better generalization to a unseen domain
+Reasoning processes are explainable and traceable
+Operation mechanism is easy to understand
+Disadvantages
+Hard to maintain consistency (between different people, at different occasions)
+Hard to handle uncertain knowledge (not easy to objectively quantify uncertainty factor)
+Hard to deal with complex, irregular information
+Knowledge acquisition is very time consuming
+Not easy to obtain high coverage (completeness) for a given domain
+Not easy to avoid redundancy
+Corpus-Based Approach#
+
+What is a corpus?
+Webster’s Dictionary
+A collection of recorded utterances used as a basis for the descriptive analysis of a language
+Oxford
+body, collection, especially of writing on a specified subject of materials for study
+TEI (Text Encoding Initiative)
+A corpus is a body of texts put together in a principled, typically in order to construct a sample of a given language or sublanguage.
+Advantages
+Knowledge acquisition can be automatically achieved by the computer
+Uncertain knowledge can be objectively quantified
+Consistency and completeness are easy to obtain
+Very suitable to handle huge and minute information (with a lot of parameters)
+Well established statistical theories and technique are available
+Disadvantages
+Preparing database is a time consuming and boring task
+Generalization is poor for small-size database
+Reasoning processes are implicit and inaccessible to human
+Parameters are interactive, hard to identify the effect of a particular one
+Source of Corpora
+Association of Computational Linguistics’ Data Collection Initiative (ACL/DCI)
+European Corpus Initiative (ECI)
+International Computer Archive of Modern English (ICAME)
+Linguistic Data Consortium (LDC)
+Consortium for Lexical Research (CLR)
+Electronic Dictionary Research (EDR)
+Text Encoding Initiative (TEI)
+European Language Resources Distribution Agency (ELDA)
+Association for Computational Linguistics and Chinese Language Processing (ROCLING)
+Hybrid Approach#
+
+When we should adopt rule-based approach :
+Not easy to establish a large-size database
+The size of rule-base needed is not large (phenomena can be governed by a small number of rules, or they have well behavior)
+Rules that will good coverage have existed
+Extensional knowledge is important to the system
+When we should adopt corpus-based approach :
+Establishing a large-size database is affordable
+Knowledge needed to solve the problem is huge and intricate, not easy to acquire by human
+Intensional knowledge is enough for the system
+A good model or formulation can be found
+World-Wide Web Resources#
+
+The Association for Computational Linguistics site (the major international organization in the field)
+The ACL Anthology (A Digital Archive of Research Papers in Computational Linguistics)
+Language Technology World
+Language Resource Listings on the Web
+The Linguistic Data Consortium (create, collect and distribute speech and text databases, lexicons, and other resources for research and development purposes)
+NLP Systems with Online Interfaces#
+
+WordNet
+Translation (google, babelfish)
+Question Answering
+Summarization
+Online concordancing
+Evaluation Competitions#
+
+Message Understanding Conference (MUC)
+named entity categorization
+word sense disambiguation
+mini-MUC (contents scanning, template filling)
+co-reference identification
+predicate-argument identification
+Document Understanding Conference (DUC)
+Automatic Summarizing Evaluation
+Text Retrieval Conference (TREC)
+Information retrieval using NLP/statistical techniques
+SENSEVAL (EVA)
+Evaluating Word Sense Disambiguation Systems
+Course Reference#
+
+Text/Reference Books#
+
+Daniel Jurafsky and James H. Martin, Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics and Speech Recognition, Second Edition. Prentice Hall, 2008. (courseware)
+
+
+Christopher D. Manning and Hinrich Schutze, Foundations of Statistical Natural Language Processing, MIT Press, 1999.
+
+
+Steven Bird, Ewan Klein, and Edward Loper, Natural Language Processing with Python: Analyzing Text with the Natural Language Toolkit, O'Reilly Media, 2009.
+
+
+Course Material#
+
+The course will consist of below topics :
+
+
+Part 0
+Lecture 1: Introduction (xmind)
+Lecture 2: Categories of Knowledge (xmind)
+Lecture 3: Mathematical Foundations
+Part 1: Words
+Lecture 4: Collocations
+Lecture 5: N-grams
+Lecture 6: Smoothing (Statistical Inference)
+Lecture 7: Hidden Markov Models
+Lecture 8: Part-of-speech Tagging (xmind)
+Lecture 8.1: Maximum Entropy Markov Model
+Part 2: Syntax
+Lecture 9: Syntax and Grammars (xmind)
+Lecture 10: Syntactic Parsing (xmind)
+Lecture 11: Statistical Parsing (xmind)
+Part 3: Semantics
+Lecture 12: The Representation of Meanings
+Lecture 13: Computational Semantics
+Lecture 14: Lexical Semantics (xmind)
+Lecture 15: Computational Lexical Semantics
+Part 4: Pragmatics
+Lecture 16: Computational Discourse
+Part 5: Applications
+Lecture 17: Statistic Machine Translation
+Useful Information#
+
+TA
+黃瀚萱，陳涵斌
+33664888 ext 301
+Grading
+Midterm Examination
+Term Examination
+Term Project
+NLP web site
+https://ceiba.ntu.edu.tw/1001nlp

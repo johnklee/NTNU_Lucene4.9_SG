@@ -1,0 +1,153 @@
+﻿Categories of Knowledge#
+
+Each kind of knowledge has associated with it an encapsulated set of processes that make use of it. Interfaces are defined that allow the various levels to communicate. This often leads to a pipeline architecture :
+Phonology
+Morphology
+Syntax
+Semantics
+Pragmatics
+Discourse
+
+
+Morphology & Knowledge of Words#
+
+在進行 NLP 時, 又可分為數個 Modules, 而為了能保留文章的原意除了單字的歧異, 句子間的上下文關係都會影響整個 NLP 的品質 :
+Morphology (Morphological analyzer)
+structure of words. 字彙的解析, 根據句子的結構推斷該字最可能的解釋
+Syntax (Parser)
+Structure of sentences. 分析語法, 產生語意樹.
+Semantics (Semantic Interpreter)
+Meaning of individual sentence. 辨識句子的意義.
+Pragmatics
+How sentences related to each other. 根據句子間的上下文推斷句子的原意.
+- Morphological Analyzer
+在進行單字分析時, 可以從 dictionary (lexicon) 進行初步的解釋並將其型態進行轉換 (過去式, 進行式 etc), 接著將之進行標示 :
+Part-of-Speech (Lexical Category)
+a set of words having similar syntactic properties
+
+
+
+
+其中標示又可以分 "粗" , "細". 更多說明可以參考 Academia Sinica Balanced Corpus:
+"Academia Sinica Balanced Corpus of Modern Chinese", simplified as Sinica Corpus, is designed for analyzing modern Chinese. Every text in the corpus is segmented and each segmented word is tagged with its part-of-speech. Texts are collected from different areas and classified according to five criteria: genre, style, mode, topic, and source...
+
+Words' Syntactic Functions#
+
+一個文字又可以分為以下幾種詞性 :
+Nouns
+Refer to entities in the world like people, animals and things.
+Determiners
+describe the particular reference of a noun
+Adjectives
+describe the properties of nouns
+Verbs
+Verbs are used to describe actions, activities and states
+Adverbs
+modify a verb in the same way as adjectives modify nouns
+Prepositions
+Prepositions are typically small words that express spatial or time relationships. Prepositions can also be used as particles to create phrasal verbs (e.g., add up)
+Conjunctions and Complementizers
+link two words, phrases or clauses.
+A complementizer is a conjunction which marks a complement clause. For example :
+I know that he is here.
+
+Context-Free Grammers#
+
+透過剛剛字詞的 tag mapping, 我們可以分析句子的結構並建立 Syntax and Context-Free Grammars syntactic structure :
+
+
+上面所述的 Context-Free Grammars (CFGs) wiki
+Context-free grammars are important in linguistics for describing the structure of sentences and words in natural language, and in computer science for describing the structure of programming languages and other artificial languages.
+
+雖然如此, 但是歧異性 (Ambiguity) 仍然會造成語意辨識的困難, 如考慮句子如下 :
+"Salespeople sold the dog biscuits."
+
+透過 CFGs 則可能有以下兩種結構 :
+
+
+
+
+事實上進行句子 structure 分析時, 可能有以下兩種方法 :
+Chomsky-normal form wiki
+Every grammar in Chomsky normal form is context-free, and conversely, every context-free grammar can be transformed into an equivalent one which is in Chomsky normal form. Several algorithms for performing such a transformation are known and makes it popular for usage in research!
+X bar theory(Jackendoff) wiki
+X-bar theory is a component of linguistic theory which attempts to identify syntactic features presumably common to all those human languages that fit in a presupposed (1965) framework.[1] It claims that among their phrasal categories, all those languages share certain structural similarities, including one known as the "X-bar", which does not appear in traditional phrase structure rules for English or other natural languages. X-bar theory was first proposed by Chomsky (1970)[2] and further developed by Jackendoff (1977)
+
+Local and Non-Local Dependencies#
+
+A local dependency is a dependency between two words expressed within the same syntactic rule. A non-local dependency is an instance in which two words can be syntactically dependent even though they occur far apart in a sentence :
+subject-verb agreement.
+long-distance dependencies such as wh-extraction.
+Non-local phenomena are a challenge for certain statistical NLP approaches (e.g., n-grams) that model local dependencies.
+Semantic Roles#
+
+A semantic role is the underlying relationship that a participant has with the main verb in a clause. Most commonly, noun phrases are arguments of verbs. These arguments have semantic roles: the agent of an action, the patient and other roles such as the instrument or the goal. For example :
+John (agent) hit Bill (patient). vs. Bill (patient) was hit by John (agent).
+
+In English, these semantic roles correspond to the notions of subject and object. But things are complicated by the notions of direct and indirect object, active and passive voice.
+Agent (施事者)
+a person or thing who is the doer of an event.
+The boy ran down the street.
+Patient (受事者)
+the surface object of the verb in a sentence.
+He opened the door.
+Instrument (工具格)
+an inanimate thing that an agent uses to implement an event.
+The cook cut the cake with a knife.
+Goal (目標)
+thing toward which an action is directed
+He threw the book at me.
+Beneficiary (受益)
+a referent which is advantaged or disadvantaged by an event.
+John sold the car for a friend.
+
+More Semantic Roles, you can refer here.
+Subcategorization#
+
+Different verbs can relate different numbers of entities: transitive versus intransitive verbs. Tightly related verb arguments are called complements(補語) but less tightly related ones are called adjuncts. Prototypical examples of adjuncts tell us time, place, or manner of the action or state described by the verb.
+Verbs are classified according to the type of complements they permit. This called subcategorization. Subcategorizations allow to capture syntactic as well as semantic regularities. 接著透過這些動詞的 subcategorization, 我們便可以分析句子, 並根據句子動詞後面接的參數, 來與該動詞可能有的 subcategorization 分類來猜測該動詞真正的意義是什麼. 而在中文部分已經有 Chinese Proposition 與 Frame file index 幫我們做好這樣的數據分析 :
+The goal of the Chinese Proposition Bank project is to create a corpus of text annotated with information about basic semantic propositions. Predicate-argument relations are being added to the syntactic trees of the Chinese Treebank.
+
+下面是一些範例說明 :
+[arg0我][argm-adv已經][rel打][arg1電話][arg2給斯恩特]
+[arg1這些算盤][arg0 產業界自己][rel打]的[argm-ext最精]
+[arg1 鮑薩]被[arg0 泰森的鐵拳][rel打]得[arg2 爬不起來]
+[arg0 他][argm-tmp晚上]則到體育場[rel打][arg1 籃球]
+
+Semantics#
+
+Semantics is the study of the meaning of words, constructions, and utterances. It can be divided into two parts: lexical semantics and combination semantics.
+- Lexical semantics
+上下位：hypernymy (上義關係) vs. hyponymy (下義關係)
+The generic term used to designate a whole class of specific instances. Y is a hypernym of X if X is a (kind of) Y . The specific term used to designate a member of a class. X is a hyponym of Y if X is a (kind of) Y .
+antonymy (反義關係) vs. Synonymy(同義詞)
+meronymy/holonymy(部分-整体/材料-實體/成員-集體)
+The name of the whole of which the meronym names a part. Y is a holonym of X if X is a part of Y .
+homonymy(同音異義) vs. polysemy(一字多義)
+Pragmatics#
+
+Pragmatics is the area of studies that goes beyond the study of the meaning of a sentence and tries to explain what the speaker really is expressing. It requires to understand the scope of quantifiers, speech acts, discourse analysis, anaphoric relations. The resolution of anaphoric relations is crucial to the task of information extraction. Below are some examples of Scope of Quantifiers :
+每個學生都買了一本書 (不一定是同一本書!)
+有一本書每個學生都買了 (買的是同一本書!)
+有一個學生不買所有的書
+有一個學生所有的書都不買
+不是所有的書都有一個學生買
+沒有一個學生買了所有的書
+所有的書都有一個學生不買
+所有的書都沒有一個學生買
+Anaphoric Relations#
+
+請參考下面範例 :
+例一: 張三是老師, 他教學很認真, 同時, 他也是一個好爸爸. 例二: 現在的氣溫是攝氏 30度
+
+同指涉(Anaphora) 指的是 :
+Type/Instance: "老師" 就是 "張三", "一個好爸爸" 就是 "張三"...
+Function/Value: "現在的氣溫" 等於 "攝氏30 度"...
+NP 的同指涉關係: "一隻小花貓" 或 "那隻貓"...
+Discourse Analysis wiki#
+
+Discourse analysis (DA), or discourse studies, is a general term for a number of approaches to analyzing written, spoken, signed language use or any significant semiotic event.
+一段談話或「論述」(discourse) 是由許多「命題」(proposition) 所構成。「論述分析」(discourse analysis) 就是分析這些命題之間的關係，目的是要明白作者的思路 :
+命題 (proposition) ＝ 主詞 (subject) + 述語 (predicate)
+
+底下是簡單範例 :

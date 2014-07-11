@@ -1,0 +1,24 @@
+﻿DESCRIPTION
+The Apache ActiveMQ message broker is an open source implementation of the Java Message Service spec. It makes for a reliable hub in any message-oriented enterprise application and integrates beautifully with Java EE containers, ESBs, and other JMS providers.
+
+ActiveMQ in Action is all you'll need to master ActiveMQ. It starts from the anatomy of a JMS message and moves quickly through connectors, message persistence, authentication, and authorization. By following a running example (a stock portfolio app), youâ€™ll pick up the best practices distilled by the authors from their long and deep involvement with this technology.
+
+WHAT'S INSIDE
+How to design message-based apps
+How to implement EI patterns using Camel
+How to administer ActiveMQ
+How to integrate with Geronimo, JBoss, Spring, and more
+This book requires a working knowledge of Java, but no previous experience with ActiveMQ or other message brokers is needed.
+
+ABOUT THE AUTHORS
+Bruce Snyder is a co-founder of Apache Geronimo, a committer for ActiveMQ, Camel, and ServiceMix, and a member of various JCP expert groups. Dejan Bosanac is an ActiveMQ committer. Rob Davies is a co-founder of ActiveMQ, ServiceMix, and Camel.
+
+WHAT REVIEWERS ARE SAYING
+“The overall writing quality is excellent. The text is very comprehensive. The style is direct and concise and the subject is treated very seriously. In conclusion, a must read book for anyone interested into the subject.”
+—Jean-Pol Landrain, IT Architect
+
+“This book offers a comfortable way to learn the most important topics about ActiveMQ...teaches you how to work with the messaging world in your applications...includes valuable images that give you an excellent visual understanding.”
+—Manuel Jordan, DZone reviewer
+
+“The authors do a very good job of starting with the basics and taking the reader through the whole process of getting ActiveMQ up and going, while at the same time, explaining the underlying JMS APIs and show the power of Java Messaging...5/5 Stars”
+—Edward Gardella, DZone Reviewer
