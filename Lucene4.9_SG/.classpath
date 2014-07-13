@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="libs/queries/lucene-queries-4.9.0.jar"/>
 	<classpathentry kind="lib" path="libs/analysis/common/lucene-analyzers-common-4.9.0.jar"/>
 	<classpathentry kind="lib" path="libs/others/Flib.jar"/>
+	<classpathentry kind="lib" path="libs/queryparser/lucene-queryparser-4.9.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

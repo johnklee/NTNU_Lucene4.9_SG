@@ -99,7 +99,7 @@ public class HelloWorld {
         {
         	Document doc = searcher.doc(sd.doc);
         	System.out.printf("\t\t%s...(%.02f)\n", doc.getField("filename").stringValue(), sd.score);
-        	System.out.printf("%s\n\n", doc.getField("contents").stringValue());
+        	//System.out.printf("%s\n\n", doc.getField("contents").stringValue());
         }
         directory.close();
 	}
