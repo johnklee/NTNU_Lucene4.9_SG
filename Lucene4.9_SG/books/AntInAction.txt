@@ -1,4 +1,7 @@
+Ant In Action
 http://www.manning.com/loughran/
 65.5
 20100205
-The most widely used build tool for Java projects, Ant is cross-platform, extensible, simple, and fast. It scales from small personal projects to large, multi-team enterprise projects. And, most important, it's easy to learn.
+1-932394-80-X
+computer education
+The most widely used build tool for Java projects, Ant is cross-platform, extensible, simple, and fast. It scales from small personal projects to large, multi-team enterprise projects. And, most important, it's easy to learn. From manning production.

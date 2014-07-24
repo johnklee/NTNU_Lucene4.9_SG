@@ -1,4 +1,7 @@
+Groovy In Action
 http://www.manning.com/koenig2/
 88.0
 20100404
-The first edition of Groovy in Action is the undisputed definitive reference on the Groovy language. Written by core members of the Groovy language team, this book presents Groovy like no other can¡Xfrom the inside out. Since its introduction a few years back, Groovy has grown from an upstart dynamic language for the JVM to become an integral part of any Java developer's toolbox. Projects like Grails and Griffon have extended Groovy's reach into the web and desktop app world.
+1-932394-84-2
+computer education
+The first edition of Groovy in Action is the undisputed definitive reference on the Groovy language. Written by core members of the Groovy language team, this book presents Groovy like no other can¡Xfrom the inside out. Since its introduction a few years back, Groovy has grown from an upstart dynamic language for the JVM to become an integral part of any Java developer's toolbox. Projects like Grails and Griffon have extended Groovy's reach into the web and desktop app world. From manning production.
