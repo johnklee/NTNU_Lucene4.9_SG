@@ -3,5 +3,5 @@ http://www.manning.com/snyder/
 95.0
 20100102
 1933988940
-computer education
+/technology/computers/programming/framework
 The Apache ActiveMQ message broker is an open source implementation of the Java Message Service spec. It makes for a reliable hub in any message-oriented enterprise application and integrates beautifully with Java EE containers, ESBs, and other JMS providers. From manning production.

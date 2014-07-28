@@ -3,5 +3,5 @@ http://junit.org/
 50.9
 20100512
 9781935182023
-computer education
+/technology/computers/programming/framework
 JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks. From manning production.

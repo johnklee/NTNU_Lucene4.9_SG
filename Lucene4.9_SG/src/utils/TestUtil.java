@@ -13,15 +13,30 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 public class TestUtil {
-	public static boolean hitsIncludeTitle(IndexSearcher searcher,
-			TopDocs hits, String title) throws IOException {
+	public static boolean hitsIncludeTitle(IndexSearcher searcher, TopDocs matches, String field, String value) throws IOException
+	{
+		for (ScoreDoc match : matches.scoreDocs) {
+			Document doc = searcher.doc(match.doc);
+			System.out.printf("\t[Test] %s=%s\n", field, doc.get(field));
+			if (value.equals(doc.get(field))) 
+			{
+				return true;
+			}			
+		}
+		System.err.println(String.format("Field='%s' with Value='%s' not found", field, value));
+		return false;
+	}
+	
+	public static boolean hitsIncludeTitle(IndexSearcher searcher, TopDocs hits, String title) throws IOException {
 		for (ScoreDoc match : hits.scoreDocs) {
 			Document doc = searcher.doc(match.doc);
-			if (title.equals(doc.get("title"))) {
+			if (title.equals(doc.get("title"))) 
+			{
 				return true;
 			}
+			System.out.printf("\t[Test] Title=%s\n", doc.get("title"));
 		}
-		System.out.println("title '" + title + "' not found");
+		System.err.println("title '" + title + "' not found");
 		return false;
 	}
 

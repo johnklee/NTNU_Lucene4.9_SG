@@ -8,18 +8,23 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.DocsAndPositionsEnum;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.index.Terms;
+import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.payloads.AveragePayloadFunction;
 import org.apache.lucene.search.payloads.PayloadTermQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
 
 import utils.TestUtil;
@@ -40,7 +45,10 @@ public class PayloadsTest extends TestCase {
 		ft1 = new FieldType();
 		ft1.setStored(true); ft1.setIndexed(false);
 		ft2 = new FieldType();
-		ft2.setStored(false); ft2.setIndexed(true);
+		ft2.setStored(true); ft2.setIndexed(true); 
+		ft2.setStoreTermVectors(true); 
+		ft2.setStoreTermVectorPositions(true);
+		ft2.setStoreTermVectorOffsets(true);
 	}
 
 	protected void tearDown() throws Exception {
@@ -89,6 +97,30 @@ public class PayloadsTest extends TestCase {
 		hits = searcher.search(query2, 10);
 		TestUtil.dumpHits(searcher, hits);
 		assertEquals("Warning label maker", searcher.doc(hits.scoreDocs[2].doc).get("title"));
+		for(ScoreDoc sd:hits.scoreDocs)
+		{
+			Document doc = r.document(sd.doc);
+			System.out.printf("\t[Info] Content:\n%s\n", doc.get("contents"));
+			System.out.printf("\t[Info] Iterate Terms in %s\n", doc.get("title"));
+			Terms terms = r.getTermVector(sd.doc, "contents");
+			TermsEnum termsEnum= terms.iterator(TermsEnum.EMPTY);
+			BytesRef term;
+			while((term=termsEnum.next())!=null){
+				String docTerm = term.utf8ToString();
+				DocsAndPositionsEnum docPosEnum = termsEnum.docsAndPositions(null, null, DocsAndPositionsEnum.FLAG_OFFSETS);							
+				docPosEnum.nextDoc();
+				System.out.printf("\t\tTerm='%s' (%d): \n", docTerm, docPosEnum.freq());
+                //Retrieve the term frequency in the current document
+                int freq=docPosEnum.freq();
+                for(int i=0; i<freq; i++){
+                    int position=docPosEnum.nextPosition();
+                    int start=docPosEnum.startOffset();
+                    int end=docPosEnum.endOffset();
+                    //Store start, end and position in a list
+                    System.out.printf("\t\t\tPos=%d; Start=%d; End=%d\n", position, start, end);
+                }
+			}
+		}
 		r.close();
 	 }
 }

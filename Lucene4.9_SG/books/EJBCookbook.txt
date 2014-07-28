@@ -1,0 +1,7 @@
+﻿EJB Cookbook
+http://www.manning.com/sullins2/
+67.0
+20030405
+1930110944
+/technology/computers/programming/framework
+The EJB Cookbook is a resource for the practicing EJB developer. It is a systematic collection of EJB 'recipes'. Each recipe describes a practical problem and its background; it then shows the code that solves it, and ends with a detailed discussion.

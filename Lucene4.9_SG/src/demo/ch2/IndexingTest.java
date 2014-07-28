@@ -47,7 +47,7 @@ public class IndexingTest extends TestCase{
         FieldType ft2 = new FieldType();
         ft2.setStored(true); ft2.setIndexed(false); 
         for (int i = 0; i < ids.length; i++) {  
-            Document doc = new Document();  
+            Document doc = new Document();              
             doc.add(new Field("id", ids[i], ft1));  
             doc.add(new Field("country", unindexed[i], ft2));  
             doc.add(new TextField("contents", unstored[i], Field.Store.NO));  

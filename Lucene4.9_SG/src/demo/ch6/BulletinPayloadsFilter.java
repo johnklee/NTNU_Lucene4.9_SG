@@ -31,16 +31,16 @@ public class BulletinPayloadsFilter extends TokenFilter {
 	public final boolean incrementToken() throws IOException {
 		if (input.incrementToken()) {						
 			List<Character> chars = new ArrayList<Character>();
-			/*System.out.printf("\t[Test] Check term: ");
+			System.out.printf("\t[Test] Check term: ");
 			for(char c:termAtt.buffer()) {
 				System.out.printf("'%c (%d)' ", c, (int)c);				
 				if(c==0) break;				
 				chars.add(c);
-			}*/
+			}
 			char charArray[] = new char[chars.size()];
 			for(int i=0; i<chars.size(); i++) charArray[i]=chars.get(i);
 			String term = String.valueOf(charArray);
-			//System.out.printf(" -> '%s' (%d|%s)\n", term, term.length(), bb.isBulletin);
+			System.out.printf(" -> '%s' (%d|%s)\n", term, term.length(), bb.isBulletin);
 			if (bb.isBulletin && term.startsWith("warning")) {
 				//System.out.printf("\t[Test] '%s' with payload...\n", term);
 				payloadAttr.setPayload(boostPayload);
