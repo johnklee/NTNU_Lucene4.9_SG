@@ -8,8 +8,8 @@
 	<classpathentry kind="lib" path="libs/analysis/common/lucene-analyzers-common-4.9.0.jar"/>
 	<classpathentry kind="lib" path="libs/others/Flib.jar"/>
 	<classpathentry kind="lib" path="libs/queryparser/lucene-queryparser-4.9.0.jar"/>
-	<classpathentry kind="lib" path="C:/John/JavaLib/Apache/Lucene/lucene-4.9.0/spatial/lucene-spatial-4.9.0.jar"/>
-	<classpathentry kind="lib" path="C:/John/JavaLib/Apache/Lucene/lucene-4.9.0/spatial/lib/spatial4j-0.4.1.jar"/>
+	<classpathentry kind="lib" path="libs/spatial/lucene-spatial-4.9.0.jar"/>
+	<classpathentry kind="lib" path="libs/spatial/lib/spatial4j-0.4.1.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
